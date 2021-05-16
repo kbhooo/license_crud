@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppRouter from 'components/Router';
 import { authServise } from "LicenseBase";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(authServise.currentUser);
+  const [init, setInit] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    authServise.onAuthStateChanged((user) => {
+      if(user){
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+      setInit(true);
+    });
+  }, []);
   return (
   <>
-    <AppRouter isLoggedIn={isLoggedIn} />;
+    {init ? <AppRouter isLoggedIn={isLoggedIn} /> : "로딩 중..."}
     <footer>&copy; {new Date().getFullYear()} ImLab Licence CRUD</footer>
   </>
   );
