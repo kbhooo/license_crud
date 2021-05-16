@@ -7,7 +7,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     authServise.onAuthStateChanged((user) => {
-      if(user){
+      if (user) {
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -16,10 +16,10 @@ function App() {
     });
   }, []);
   return (
-  <>
-    {init ? <AppRouter isLoggedIn={isLoggedIn} /> : "로딩 중..."}
-    <footer>&copy; {new Date().getFullYear()} ImLab Licence CRUD</footer>
-  </>
+    <>
+      {init ? <AppRouter isLoggedIn={isLoggedIn} /> : "로딩 중..."}
+      <footer>&copy; {new Date().getFullYear()} ImLab Licence CRUD</footer>
+    </>
   );
 }
 
