@@ -1,4 +1,16 @@
+import { authServise } from "LicenseBase";
 import React from "react";
+import { useHistory } from "react-router";
 
-const Profile = () => <span>Profile</span>
-export default Profile;
+export default () => {
+  const history = useHistory();
+  const onLogoutClick = () => {
+    authServise.signOut();
+    history.push("/");
+  };
+  return (
+    <>
+      <button onClick={onLogoutClick}>Log out</button>
+    </>
+  );
+};
