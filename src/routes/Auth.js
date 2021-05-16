@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { authServise, firebaseInstance } from 'LicenseBase';
+import { authServise, firebaseInstance } from 'licenseBase';
 
 const Auth = () => {
     const [email, setEmail] = useState("");
@@ -21,9 +21,15 @@ const Auth = () => {
       try{
           let data;
         if(newAccount){
-          data = await authServise.createUserWithEmailAndPassword(email, password)
+          data = await authServise.createUserWithEmailAndPassword(
+            email, 
+            password
+          );
         } else {
-          data = await authServise.signInWithEmailAndPassword(email, password)
+          data = await authServise.signInWithEmailAndPassword(
+            email, 
+            password
+          );
         }
         console.log(data);
       } catch(error){
@@ -31,17 +37,19 @@ const Auth = () => {
       }
     };
     const toggleAccount = () => setNewAccount((prev) => !prev);
-    const onSocialClick = async (e) => {
+    const onSocialClick = async (event) => {
       const {
         target: { name },
-      } = e;
+      } = event;
       let provider;
-      if(name === "google"){
+      if (name === "google") {
         provider = new firebaseInstance.auth.GoogleAuthProvider();
-      };
+      } else if (name === "github") {
+        provider = new firebaseInstance.auth.GithubAuthProvider();
+      }
       const data = await authServise.signInWithPopup(provider);
       console.log(data);
-      
+    };
     return (
       <div>
         <form onSubmit={onSubmit}>
@@ -69,6 +77,5 @@ const Auth = () => {
       </div>
     );
   };
-};
 
 export default Auth;
