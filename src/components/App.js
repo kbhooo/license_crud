@@ -1,8 +1,15 @@
-import React from 'react';
-import AppRouter from './Router';
+import React, { useState} from 'react';
+import AppRouter from 'components/Router';
+import { authServise } from "LicenseBase";
 
 function App() {
-  return <AppRouter />;
+  const [isLoggedIn, setIsLoggedIn] = useState(authServise.currentUser);
+  return (
+  <>
+    <AppRouter isLoggedIn={isLoggedIn} />;
+    <footer>&copy; {new Date().getFullYear()} ImLab Licence CRUD</footer>
+  </>
+  );
 }
 
 export default App;

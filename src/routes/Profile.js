@@ -1,4 +1,4 @@
 import React from "react";
 
-const Profile = () => <span>Auth</span>;
+const Profile = () => <span>Profile</span>
 export default Profile;
