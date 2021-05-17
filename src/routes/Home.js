@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { dbService } from "licenseBase";
+import Name from "components/Name";
 
 const Home = ({ userObj }) => {
   const [name, setName] = useState("");
@@ -43,9 +44,11 @@ const Home = ({ userObj }) => {
       </form>
       <div>
         {names.map((name) => (
-          <div key={name.id}>
-            <h4>{name.name}</h4>
-          </div>
+          <Name 
+            key={name.id} 
+            nameObj={name} 
+            isOwner={name.masterUserId === userObj.uid}
+          />
         ))}
       </div>
     </div>
