@@ -1,27 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { dbService } from "licenseBase";
 
-const Home = () => {
+const Home = ({ userObj }) => {
   const [name, setName] = useState("");
   const [names, setNames] = useState([]);
-  const getNames = async()=>{
-    const dbNames = await dbService.collection("Test Licenses").get();
-    dbNames.forEach((document) => {
-      const nameObject = {
-        ...document.data(),
-        id: document.id,
-      };
-      setNames((prev) => [nameObject, ...prev]);
-    });
-  };
   useEffect(() => {
-    getNames();
+    dbService.collection("Test Licenses").onSnapshot((snapshot) => {
+      const nameArray = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setNames(nameArray);
+    });
   }, [])
   const onSubmit = async (e) => {
     e.preventDefault();
     await dbService.collection("Test Licenses").add({
-      name,
+      name: name,
       dateIssued: Date.now(),
+      masterUserId: userObj.uid,
     });
     setName("");
   }

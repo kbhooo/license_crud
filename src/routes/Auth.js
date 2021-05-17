@@ -56,7 +56,7 @@ const Auth = () => {
           <input 
             name="email" 
             type="email" 
-            placeholder="Email" 
+            placeholder="이메일" 
             required 
             value={email}
             onChange={onChange}
@@ -64,16 +64,16 @@ const Auth = () => {
           <input 
             name="password"
             type="password" 
-            placeholder="Password"
+            placeholder="비밀번호"
             required
             value={password}
             onChange={onChange} 
           />
-          <input type="submit" value={newAccount ? "Create Account" : "Log In"} />
+          <input type="submit" value={newAccount ? "회원가입" : "로그인"} />
           {error}
         </form>
-        <span onClick={toggleAccount}>{newAccount ? "로그인" : "회원가입"}</span>
-        <button onClick={onSocialClick} name="google">Continue with Google</button>
+        <span onClick={toggleAccount}>{newAccount ? "로그인 하기" : "회원가입 하기"}</span>
+        <button onClick={onSocialClick} name="google">구글로 계속하기</button>
       </div>
     );
   };
