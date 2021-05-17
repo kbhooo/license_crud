@@ -1,28 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { authServise, dbService } from "licenseBase";
 import { useHistory } from "react-router";
 
 export default ({ userObj }) => {
   const history = useHistory();
+  const [setNewDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const onLogoutClick = () => {
     authServise.signOut();
     history.push("/");
   };
-  const getMyNames = async() => {
-    const names = await dbService
-      .collection("Test License")
-      .where("masterUserId", "==", userObj.uid)
-      .orderBy("dateIssued")
-      .get();
-    console.log(names.docs.map(doc => doc.data()));
-  };
-
-  useEffect(()=> {
-    getMyNames();
-  }, [])
-  return (
+const onChange = (event) => {
+  const {
+    target: { value },
+  } = event;
+  setNewDisplayName(value);
+};
+const onSubmit = async (event) => {
+  event.preventDefault();
+  if (userObj.displayName !== newDisplayName) {
+    await userObj.updateProfile({
+      displayName: newDisplayName,
+    });
+  }
+};
+return (
     <>
-      <button onClick={onLogoutClick}>Log out</button>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          type="text"
+          placeholder="Display name"
+          value={newDisplayName}
+        />
+        <input type="submit" value="Update Profile" />
+      </form>
+      <button onClick={onLogoutClick}>로그아웃</button>
     </>
-  );
+  )
 };
