@@ -5,7 +5,7 @@ const Home = () => {
   const [name, setName] = useState("");
   const [names, setNames] = useState([]);
   const getNames = async()=>{
-    const dbNames = await dbService.collection("TestLicense").get();
+    const dbNames = await dbService.collection("Test Licenses").get();
     dbNames.forEach((document) => {
       const nameObject = {
         ...document.data(),
@@ -19,7 +19,7 @@ const Home = () => {
   }, [])
   const onSubmit = async (e) => {
     e.preventDefault();
-    await dbService.collection("TestLicense").add({
+    await dbService.collection("Test Licenses").add({
       name,
       dateIssued: Date.now(),
     });
