@@ -7,14 +7,14 @@ const Name = ({ nameObj, isOwner }) => {
     const onDeleteClick = async () => {
       const ok = window.confirm("해당 라이센스를 삭제하시겠습니까?");
       if(ok){
-        await dbService.doc(`names/${nameObj.id}`).delete();
+        await dbService.doc(`Test Licenses/${nameObj.id}`).delete();
       }
     };
   const toggleEditing = () => setEditing((prev) => !prev);
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    await dbService.doc(`names/${nameObj.id}`).update({
-      name:newName,
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    await dbService.doc(`Test Licenses/${nameObj.id}`).update({
+      name: newName,
     });
     setEditing(false);
   };
@@ -37,7 +37,7 @@ const Name = ({ nameObj, isOwner }) => {
                 required
                 onChange={onChange}
               />
-              <input type="submit" value="라이센스 수정" />
+              <input type="submit" value="수정" />
             </form>
             <button onClick={toggleEditing}>취소하기</button>
           </>
