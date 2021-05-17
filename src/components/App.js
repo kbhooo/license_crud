@@ -9,18 +9,36 @@ function App() {
   useEffect(() => {
     authServise.onAuthStateChanged((user) => {
       if (user) {
-        setIsLoggedIn(true);
-        setUserObj(user);
-      } else {
-        setIsLoggedIn(false);
+        setUserObj({
+          displayName: user.displayName,
+          uid: user.uid,
+          updateProfile: (args) =>
+          user.updateProfile(args),
+        });
       }
       setInit(true);
     });
   }, []);
+  const refreshUser = () => {
+    const user = authServise.currentUser;
+    setUserObj({
+      displayName: user.displayName,
+      uid: user.uid,
+      updateProfile: (args) =>
+      user.updateProfile(args),
+    });
+  };
   return (
     <>
-      {init ? <AppRouter isLoggedIn={isLoggedIn} userObj={userObj}/> : "로딩 중..."}
-      <footer>&copy; {new Date().getFullYear()} ImLab Licence CRUD</footer>
+      {init ? (
+        <AppRouter 
+          refreshUser={refreshUser}
+          isLoggedIn={Boolean(userObj)} 
+          userObj={userObj}
+        />
+      ) : (
+        "로딩 중..."
+      )}
     </>
   );
 }

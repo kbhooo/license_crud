@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { authServise, dbService } from "licenseBase";
+import React, { useState } from "react";
+import { authServise } from "licenseBase";
 import { useHistory } from "react-router";
 
-export default ({ userObj }) => {
+export default ({ userObj, refreshUser }) => {
   const history = useHistory();
-  const [setNewDisplayName, setNewDisplayName] = useState(userObj.displayName);
+  const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const onLogoutClick = () => {
     authServise.signOut();
     history.push("/");
@@ -21,6 +21,7 @@ const onSubmit = async (event) => {
     await userObj.updateProfile({
       displayName: newDisplayName,
     });
+    refreshUser();
   }
 };
 return (
